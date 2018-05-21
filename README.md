@@ -249,7 +249,7 @@ In our case, we have 10K users * 250 apps in one space, so that is roughly 25M r
 Last but not least, make sure to revert the change (remove db_logging_level and log_db_queries and re-deploy) once the troubleshooting / investigation is over.
 
 
-## Appendix - Prepare a test environment
+## Appendix A - Prepare a test environment
 
 We are using a known memory bloat issue in ERT prior to 1.12.17 to demonstrate how should we troubleshoot in such case.
 
@@ -309,6 +309,21 @@ Now we are ready to go.
 Access the apps manager via browser and login, it should take a few seconds or minutes to login depends on the spec of your deployment.
 
 And after you login successfully, the memory usage of cloud controller will sky rocket.
+
+## Appendix B - Troubleshoot OPS Manager memory issue
+
+Since OPS manager is also a ruby rails application, we can use similar steps to troubleshoot memory leak issue in OPS Manager as well.
+
+First let's find out the startup script of OPS manager.
+
+```
+root@bosh-stemcell:~# ps -ef | grep ruby
+tempest+  1407     1  0 Feb22 ?        00:17:43 /home/tempest-web/tempest/web/vendor/bundle/ruby/2.3.0/bin/clockwork clock.rb
+tempest+  1418  1415  0 Feb22 ?        03:44:54 /home/tempest-web/tempest/web/vendor/bundle/ruby/2.3.0/bin/thin -C config/thin.production.yml start
+root     13005 12881  0 04:53 pts/5    00:00:00 grep --color=auto ruby
+```
+
+So it is `/home/tempest-web/tempest/web/vendor/bundle/ruby/2.3.0/bin/thin`, now make a backup of this file and have a close look.
 
 
 
