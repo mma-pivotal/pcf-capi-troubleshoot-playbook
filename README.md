@@ -42,7 +42,7 @@ This could cause issues in customer production environment as all ongoing tasks 
 
 ## Troubleshooting memory dump
 
-We are going to use 3rd party tool [heapy] (https://github.com/schneems/heapy) to dump and analysis the heap memory.
+We are going to use 3rd party tool [heapy](https://github.com/schneems/heapy) to dump and analysis the heap memory.
 
 Edit the cloud controller runner (/var/vcap/jobs/cloud_controller_ng/packages/cloud_controller_ng/cloud_controller_ng/lib/cloud_controller/runner.rb) and apply the following changes.
 
